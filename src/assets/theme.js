@@ -5,5 +5,6 @@ export const theme = {
   paidColor: '#41C6A7',
   pendingColor: '#E39028',
   draftColor: '#E6E8FA',
-  fontColor: '#F6F8FC'
+  fontColor: '#F6F8FC',
+  iconColor: '#8484A9'
 };
