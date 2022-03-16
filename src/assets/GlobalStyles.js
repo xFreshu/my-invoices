@@ -6,6 +6,8 @@ export const GlobalStyles = createGlobalStyle`
   *::before,
   *::after {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
 
   /* Remove default padding */
@@ -39,6 +41,7 @@ export const GlobalStyles = createGlobalStyle`
     scroll-behavior: smooth;
     text-rendering: optimizeSpeed;
     line-height: 1.5;
+    background-color: ${({ theme }) => theme.bgColor};
   }
 
   /* Remove list styles on ul, ol elements with a class attribute */

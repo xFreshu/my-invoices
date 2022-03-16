@@ -1,7 +1,6 @@
 import React from 'react';
-import { ThemeProvider } from 'styled-components';
-import { theme } from '../assets/theme';
 import styled from 'styled-components';
+import Navigation from '../components/molecules/Navigation/Navigation';
 
 const Test = styled.div`
   color: ${({ theme }) => theme.paidColor};
@@ -9,9 +8,10 @@ const Test = styled.div`
 
 const App = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <Test>Hello</Test>
-    </ThemeProvider>
+    <>
+      <Navigation />
+      <Test>Test</Test>
+    </>
   );
 };
 
