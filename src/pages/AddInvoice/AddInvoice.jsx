@@ -1,29 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import styled from 'styled-components';
+import { FormContainer } from './AddInvoice.styles';
 import PropTypes from 'prop-types';
 
-const FormContainer = styled.div`
-  margin-top: 40px;
-  form {
-    background-color: ${({ theme }) => theme.cardColor};
-    display: flex;
-    flex-direction: column;
-    width: 90%;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 20px;
-    border-radius: 10px;
-  }
-`;
 const AddInvoice = ({ setInvoices, invoices }) => {
-  const [counter, setCounter] = useState(0);
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors }
   } = useForm();
+
+  const onDraft = (data) =>
+    setInvoices([
+      ...invoices,
+      {
+        ...data,
+        id: Math.random().toString(36).substring(7).toLocaleUpperCase(),
+        status: 'Draft',
+        dateDue: currentDay,
+        invoicePrice: +data.invoicePrice
+      }
+    ]);
+
   const onSubmit = (data) =>
     setInvoices([
       ...invoices,
@@ -31,7 +30,8 @@ const AddInvoice = ({ setInvoices, invoices }) => {
         ...data,
         id: Math.random().toString(36).substring(7).toLocaleUpperCase(),
         status: 'Pending',
-        dateDue: currentDay
+        dateDue: currentDay,
+        invoicePrice: +data.invoicePrice
       }
     ]);
 
@@ -56,16 +56,14 @@ const AddInvoice = ({ setInvoices, invoices }) => {
   return (
     <FormContainer>
       <form onSubmit={handleSubmit(onSubmit)}>
-        {/* register your input into the hook by invoking the "register" function */}
+        <label>Contractor:</label>
         <input defaultValue="test" {...register('contractor')} />
-
-        {/* include validation with required or other standard HTML validation rules */}
-        <input {...register('invoicePrice', { required: true })} type="number" />
-        {/* errors will return when field validation fails  */}
+        <label>Invoice Price:</label>
+        <input {...register('invoicePrice', { required: true })} />
         {errors.invoicePrice && <span>This field is required</span>}
         <div>
           <button type="submit">Submit</button>
-          <button>Draft</button>
+          <button onClick={handleSubmit(onDraft)}>Draft</button>
         </div>
       </form>
     </FormContainer>
