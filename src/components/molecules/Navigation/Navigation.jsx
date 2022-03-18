@@ -1,14 +1,16 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MdNightlightRound } from 'react-icons/md';
 import { NavigationBar } from './Navigation.styles';
 import { StyledLogo } from '../../atoms/Logo/Logo.styles';
 
 const Navigation = () => {
+  const navigate = useNavigate();
   return (
     <NavigationBar>
       <ul>
         <li>
-          <StyledLogo />
+          <StyledLogo onClick={() => navigate('/')} />
         </li>
         <li>
           <MdNightlightRound />

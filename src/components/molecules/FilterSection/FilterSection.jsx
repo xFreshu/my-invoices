@@ -1,8 +1,10 @@
 import React from 'react';
 import { StyledFilterSection } from './FilterSection.styles';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
 const FilterSection = ({ invoices }) => {
+  const navigate = useNavigate();
   return (
     <StyledFilterSection>
       <div>
@@ -11,12 +13,12 @@ const FilterSection = ({ invoices }) => {
       </div>
       <div>
         <select>
-          <option value="MdNightlightRound">Filter</option>
+          <option value="MdNightlightRound">Filter V</option>
           <option value="Paid">Paid</option>
           <option value="Draft">Draft</option>
           <option value="Pending">Pending</option>
         </select>
-        <button>
+        <button onClick={() => navigate('/add-invoice')}>
           <b>+</b>
           <span>New</span>
         </button>

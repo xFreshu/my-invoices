@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import Navigation from '../components/molecules/Navigation/Navigation';
-import InvoicesContainer from '../components/organisms/InvoicesContainer/InvoicesContainer';
-import FilterSection from '../components/molecules/FilterSection/FilterSection';
-
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Home from './Home/Home';
+import AddInvoice from './AddInvoice/AddInvoice';
 const DUMMY_DATA = [
   {
     id: 'RT3080',
@@ -31,11 +30,17 @@ const DUMMY_DATA = [
 const App = () => {
   const [invoices, setInvoices] = useState(DUMMY_DATA);
   return (
-    <>
+    <BrowserRouter>
       <Navigation />
-      <FilterSection invoices={invoices} />
-      <InvoicesContainer invoices={invoices} />
-    </>
+      <Routes>
+        <Route exact path="/" element={<Home invoices={invoices} />} />
+        <Route
+          exact
+          path="/add-invoice"
+          element={<AddInvoice setInvoices={setInvoices} invoices={invoices} />}
+        />
+      </Routes>
+    </BrowserRouter>
   );
 };
 

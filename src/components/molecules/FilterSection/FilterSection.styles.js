@@ -32,6 +32,7 @@ export const StyledFilterSection = styled.div`
         -moz-appearance: none;
         -webkit-appearance: none;
         appearance: none;
+        margin-right: 20px;
         option {
           background-color: ${({ theme }) => theme.cardColor};
           padding: 10px;
