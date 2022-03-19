@@ -40,7 +40,10 @@ const App = () => {
           path="/add-invoice"
           element={<AddInvoice setInvoices={setInvoices} invoices={invoices} />}
         />
-        <Route path={`/invoice-:invoiceId`} element={<ChosenInvoice invoices={invoices} />} />
+        <Route
+          path={`/invoice-:invoiceId`}
+          element={<ChosenInvoice invoices={invoices} setInvoices={setInvoices} />}
+        />
         <Route path="*" element={<h1>Sad</h1>} />
       </Routes>
     </BrowserRouter>
