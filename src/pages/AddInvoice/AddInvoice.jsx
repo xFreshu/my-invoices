@@ -1,7 +1,8 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { FormContainer } from './AddInvoice.styles';
+import { FormContainer, StyledButton } from './AddInvoice.styles';
 import PropTypes from 'prop-types';
+import ActionButton from '../../components/atoms/ActionButton/ActionButton';
 
 const AddInvoice = ({ setInvoices, invoices }) => {
   const {
@@ -62,8 +63,8 @@ const AddInvoice = ({ setInvoices, invoices }) => {
         <input {...register('invoicePrice', { required: true })} />
         {errors.invoicePrice && <span>This field is required</span>}
         <div>
-          <button type="submit">Submit</button>
-          <button onClick={handleSubmit(onDraft)}>Draft</button>
+          <ActionButton type={`submit`} name={`Submit`} />
+          <ActionButton type={`submit`} name={`Draft`} onClick={handleSubmit(onDraft)} />
         </div>
       </form>
     </FormContainer>

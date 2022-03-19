@@ -13,7 +13,7 @@ const FilterSection = ({ invoices }) => {
       </div>
       <div>
         <select>
-          <option value="MdNightlightRound">Filter V</option>
+          <option value="MdNightlightRound">Filter your invoice</option>
           <option value="Paid">Paid</option>
           <option value="Draft">Draft</option>
           <option value="Pending">Pending</option>

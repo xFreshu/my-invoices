@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const StyledInvoiceCard = styled.li`
   display: flex;
@@ -43,4 +44,10 @@ export const StyledInvoiceCard = styled.li`
       margin-left: 10px;
     }
   }
+`;
+
+export const LinkToInvoice = styled(Link)`
+  font-size: 1.7rem;
+  margin-left: 10px;
+  color: ${({ theme }) => theme.fontColor};
 `;
