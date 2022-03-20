@@ -3,8 +3,13 @@ import { StyledFilterSection } from './FilterSection.styles';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
-const FilterSection = ({ invoices }) => {
+const FilterSection = ({ invoices, setSearchedInvoices, searchedInvoices }) => {
   const navigate = useNavigate();
+
+  const handleSelect = (e) => {
+    setSearchedInvoices(e.target.value);
+  };
+
   return (
     <StyledFilterSection>
       <div>
@@ -12,8 +17,8 @@ const FilterSection = ({ invoices }) => {
         <span>{invoices.length} invoices</span>
       </div>
       <div>
-        <select>
-          <option value="MdNightlightRound">Filter your invoice</option>
+        <select value={searchedInvoices} onChange={handleSelect}>
+          <option value="">Filter your invoice</option>
           <option value="Paid">Paid</option>
           <option value="Draft">Draft</option>
           <option value="Pending">Pending</option>
@@ -28,7 +33,9 @@ const FilterSection = ({ invoices }) => {
 };
 
 FilterSection.propTypes = {
-  invoices: PropTypes.array.isRequired
+  invoices: PropTypes.array.isRequired,
+  setSearchedInvoices: PropTypes.func,
+  searchedInvoices: PropTypes.string
 };
 
 export default FilterSection;
