@@ -8,6 +8,10 @@ export const InvoiceCard = styled.div`
   background-color: ${({ theme }) => theme.cardColor};
   display: flex;
   flex-direction: column;
+  form {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 export const ButtonContainer = styled.div`
