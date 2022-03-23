@@ -5,6 +5,8 @@ import { ButtonContainer, InvoiceCard } from './ChosenInvoice.styles';
 import PropTypes from 'prop-types';
 import StatusInvoice from '../../components/atoms/StatusInvoice/StatusInvoice';
 import ActionButton from '../../components/atoms/ActionButton/ActionButton';
+import { StyledInput } from '../../components/atoms/Input/Input.styles';
+import { StyledLabel } from '../../components/atoms/Input/Label.styles';
 
 const ChosenInvoice = ({ invoices, setInvoices }) => {
   const [isEdit, setIsEdit] = useState(false);
@@ -43,7 +45,11 @@ const ChosenInvoice = ({ invoices, setInvoices }) => {
   } = useForm();
   //Edit invoice
   const onSubmit = (data) => {
-    const savedInvoice = { ...data, status: 'Draft', invoicePrice: +data.invoicePrice };
+    const day = new Date();
+    const newDate = data.dateDue;
+
+    console.log(newDate);
+    const savedInvoice = { ...data, status: 'Pending', invoicePrice: +data.invoicePrice };
     console.log(savedInvoice);
     const savedID = data.id;
     console.log(invoices.filter((item) => item.id === savedID));
@@ -56,22 +62,23 @@ const ChosenInvoice = ({ invoices, setInvoices }) => {
     <InvoiceCard>
       <form onSubmit={handleSubmit(onSubmit)}>
         <StatusInvoice invoiceStatus={getInvoice.status} />
-        <label>Invoice ID:</label>
-        <input defaultValue={getInvoice.id} {...register('id')} />
-        <label>Contractor name:</label>
-        <input
+        <StyledLabel>Invoice ID:</StyledLabel>
+        <StyledInput defaultValue={getInvoice.id} {...register('id')} />
+        <StyledLabel>Contractor name:</StyledLabel>
+        <StyledInput
           defaultValue={getInvoice.contractor}
           {...register('contractor')}
           disabled={getInvoice.status !== 'Draft'}
         />
-        <label>Date due:</label>
-        <input
+        <StyledLabel>Date due:</StyledLabel>
+        <StyledInput
           defaultValue={getInvoice.dateDue}
           {...register('dateDue')}
           disabled={getInvoice.status !== 'Draft'}
+          type="date"
         />
-        <label>Invoice Price:</label>
-        <input
+        <StyledLabel>Invoice Price:</StyledLabel>
+        <StyledInput
           defaultValue={getInvoice.invoicePrice}
           {...register('invoicePrice')}
           disabled={getInvoice.status !== 'Draft'}
@@ -79,12 +86,7 @@ const ChosenInvoice = ({ invoices, setInvoices }) => {
         <ButtonContainer>
           {getInvoice.status === 'Draft' ? (
             <>
-              <ActionButton
-                type="submit"
-                name="Change status to pending"
-                onClick={() => changeStatus(getInvoice.id)}
-              />
-              <input type="submit" />
+              <ActionButton type="submit" name={`Save invoice`} />
             </>
           ) : getInvoice.status === 'Pending' ? (
             <ActionButton

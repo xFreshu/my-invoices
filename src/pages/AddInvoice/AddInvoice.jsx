@@ -1,8 +1,10 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { FormContainer, StyledButton } from './AddInvoice.styles';
+import { FormContainer } from './AddInvoice.styles';
 import PropTypes from 'prop-types';
 import ActionButton from '../../components/atoms/ActionButton/ActionButton';
+import { StyledInput } from '../../components/atoms/Input/Input.styles';
+import { StyledLabel } from '../../components/atoms/Input/Label.styles';
 
 const AddInvoice = ({ setInvoices, invoices }) => {
   const {
@@ -24,7 +26,7 @@ const AddInvoice = ({ setInvoices, invoices }) => {
       }
     ]);
 
-  const onSubmit = (data) =>
+  const onSubmit = (data) => {
     setInvoices([
       ...invoices,
       {
@@ -35,6 +37,8 @@ const AddInvoice = ({ setInvoices, invoices }) => {
         invoicePrice: +data.invoicePrice
       }
     ]);
+    console.log(data);
+  };
 
   const date = new Date();
   const months = [
@@ -57,11 +61,10 @@ const AddInvoice = ({ setInvoices, invoices }) => {
   return (
     <FormContainer>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label>Contractor:</label>
-        <input defaultValue="test" {...register('contractor')} />
-        <label>Invoice Price:</label>
-        <input {...register('invoicePrice', { required: true })} />
-        {errors.invoicePrice && <span>This field is required</span>}
+        <StyledLabel>Contractor:</StyledLabel>
+        <StyledInput {...register('contractor')} />
+        <StyledLabel>Invoice Price:</StyledLabel>
+        <StyledInput {...register('invoicePrice')} />
         <div>
           <ActionButton type={`submit`} name={`Submit`} />
           <ActionButton type={`submit`} name={`Draft`} onClick={handleSubmit(onDraft)} />
