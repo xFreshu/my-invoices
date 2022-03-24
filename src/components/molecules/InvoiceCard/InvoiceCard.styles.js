@@ -15,6 +15,12 @@ export const StyledInvoiceCard = styled.li`
   div {
     display: flex;
     flex-direction: column;
+    @media (min-width: 1000px) {
+      width: 100%;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
     :nth-child(1) {
       span {
         :nth-child(1) {
@@ -34,9 +40,21 @@ export const StyledInvoiceCard = styled.li`
       }
     }
     :nth-child(2) {
-      margin-left: auto;
       text-align: center;
+      align-items: center;
+      margin-left: auto;
+      @media (min-width: 1000px) {
+        div {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100px;
+        }
+      }
       span {
+        @media (min-width: 1000px) {
+          margin-left: 100px;
+        }
         text-align: right;
       }
     }

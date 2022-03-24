@@ -18,6 +18,6 @@ export const StyledStatusInvoice = styled.div`
   font-weight: 700;
   padding: 5px 0;
   border-radius: 10px;
-  margin-top: 10px;
+  text-align: center;
   justify-content: center;
 `;
