@@ -28,11 +28,11 @@ const InvoiceCard = ({ id, invoicePrice, contractor, dateDue, status, onClick })
 };
 
 InvoiceCard.propTypes = {
-  id: PropTypes.string.isRequired,
-  dateDue: PropTypes.string.isRequired,
-  contractor: PropTypes.string.isRequired,
-  invoicePrice: PropTypes.number.isRequired,
-  status: PropTypes.string.isRequired,
+  id: PropTypes.string,
+  dateDue: PropTypes.string,
+  contractor: PropTypes.string,
+  invoicePrice: PropTypes.number,
+  status: PropTypes.string,
   onClick: PropTypes.func
 };
 
