@@ -4,13 +4,17 @@ import App from './pages/App';
 import { GlobalStyles } from './assets/GlobalStyles';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './assets/theme';
+import store from './app/redux/store';
+import { Provider } from 'react-redux';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      <App />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <App />
+      </ThemeProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
