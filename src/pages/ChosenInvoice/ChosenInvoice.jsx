@@ -1,34 +1,30 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { InvoiceCard } from './ChosenInvoice.styles';
-import PropTypes from 'prop-types';
 import DraftInvoice from '../../components/organisms/DraftInvoice/DraftInvoice';
 import PendingOrPaidInvoice from '../../components/organisms/PendingOrPaidInvoice/PendingOrPaidInvoice';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  changeStatusOfInvoice,
+  deleteInvoice
+} from '../../app/redux/features/invoices/invoicesSlice';
 
-const ChosenInvoice = ({ invoices, setInvoices }) => {
+const ChosenInvoice = () => {
+  const dispatch = useDispatch();
+  const invoices = useSelector((state) => state);
+  const setInvoices = () => {};
   const navigate = useNavigate();
   //Get chosen invoice using invoiceId params
   const { invoiceId } = useParams();
   let getInvoice = invoices.find((invoice) => invoice.id === invoiceId);
   //Change Status/Delete invoice
   const changeStatus = (id) => {
-    const getNewArray = invoices.map((item) => {
-      if (item.id === id) {
-        item.status === 'Draft'
-          ? (getInvoice.status = 'Pending')
-          : item.status === 'Pending'
-          ? (getInvoice.status = 'Paid')
-          : null;
-      }
-      return item;
-    });
-    setInvoices(getNewArray);
+    dispatch(changeStatusOfInvoice({ id: id }));
   };
 
   //Delete invoice
-  const deleteInvoice = (id) => {
-    const getNewArray = invoices.filter((item) => item.id !== id);
-    setInvoices(getNewArray);
+  const handleDeleteInvoice = (id) => {
+    dispatch(deleteInvoice({ id }));
     navigate('/');
   };
 
@@ -40,21 +36,18 @@ const ChosenInvoice = ({ invoices, setInvoices }) => {
           invoices={invoices}
           navigate={navigate}
           setInvoices={setInvoices}
+          handleDeleteInvoice={handleDeleteInvoice}
+          invoiceId={invoiceId}
         />
       ) : (
         <PendingOrPaidInvoice
           getInvoice={getInvoice}
           changeStatus={changeStatus}
-          deleteInvoice={deleteInvoice}
+          deleteInvoice={handleDeleteInvoice}
         />
       )}
     </InvoiceCard>
   );
-};
-
-ChosenInvoice.propTypes = {
-  invoices: PropTypes.array.isRequired,
-  setInvoices: PropTypes.func.isRequired
 };
 
 export default ChosenInvoice;

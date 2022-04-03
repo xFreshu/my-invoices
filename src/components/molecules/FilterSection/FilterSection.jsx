@@ -2,14 +2,15 @@ import React from 'react';
 import { StyledFilterSection } from './FilterSection.styles';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-const FilterSection = ({ invoices, setSearchedInvoices, searchedInvoices }) => {
+const FilterSection = ({ setSearchedInvoices, searchedInvoices }) => {
   const navigate = useNavigate();
 
   const handleSelect = (e) => {
     setSearchedInvoices(e.target.value);
   };
-
+  const invoices = useSelector((state) => state);
   return (
     <StyledFilterSection>
       <div>
@@ -33,7 +34,6 @@ const FilterSection = ({ invoices, setSearchedInvoices, searchedInvoices }) => {
 };
 
 FilterSection.propTypes = {
-  invoices: PropTypes.array.isRequired,
   setSearchedInvoices: PropTypes.func,
   searchedInvoices: PropTypes.string
 };

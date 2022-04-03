@@ -5,8 +5,13 @@ import PropTypes from 'prop-types';
 import ActionButton from '../../components/atoms/ActionButton/ActionButton';
 import { StyledInput } from '../../components/atoms/Input/Input.styles';
 import { StyledLabel } from '../../components/atoms/Input/Label.styles';
+import { useDispatch } from 'react-redux';
+import {
+  addInvoiceDraft,
+  addInvoicePending
+} from '../../app/redux/features/invoices/invoicesSlice';
 
-const AddInvoice = ({ setInvoices, invoices }) => {
+const AddInvoice = () => {
   const {
     register,
     handleSubmit,
@@ -14,30 +19,13 @@ const AddInvoice = ({ setInvoices, invoices }) => {
     formState: { errors }
   } = useForm();
 
-  const onDraft = (data) =>
-    setInvoices([
-      ...invoices,
-      {
-        ...data,
-        id: Math.random().toString(36).substring(7).toLocaleUpperCase(),
-        status: 'Draft',
-        dateDue: currentDay,
-        invoicePrice: +data.invoicePrice
-      }
-    ]);
+  const dispatch = useDispatch();
+  const onDraft = (data) => {
+    dispatch(addInvoiceDraft({ contractor: data.contractor, invoicePrice: data.invoicePrice }));
+  };
 
   const onSubmit = (data) => {
-    setInvoices([
-      ...invoices,
-      {
-        ...data,
-        id: Math.random().toString(36).substring(7).toLocaleUpperCase(),
-        status: 'Pending',
-        dateDue: currentDay,
-        invoicePrice: +data.invoicePrice
-      }
-    ]);
-    console.log(data);
+    dispatch(addInvoicePending({ contractor: data.contractor, invoicePrice: data.invoicePrice }));
   };
 
   const date = new Date();
@@ -72,11 +60,6 @@ const AddInvoice = ({ setInvoices, invoices }) => {
       </form>
     </FormContainer>
   );
-};
-
-AddInvoice.propTypes = {
-  setInvoices: PropTypes.func.isRequired,
-  invoices: PropTypes.array.isRequired
 };
 
 export default AddInvoice;

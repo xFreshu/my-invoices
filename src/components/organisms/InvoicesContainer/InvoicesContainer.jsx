@@ -1,10 +1,9 @@
 import React from 'react';
 import InvoiceCard from '../../molecules/InvoiceCard/InvoiceCard';
 import { StyledInvoicesContainer } from './InvoicesContainer.styles';
-import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 
-const InvoicesContainer = () => {
-  const invoices = useSelector((state) => state);
+const InvoicesContainer = ({ invoices }) => {
   return (
     <StyledInvoicesContainer>
       {invoices.map(({ id, dateDue, invoicePrice, contractor, status }) => (
@@ -20,5 +19,7 @@ const InvoicesContainer = () => {
     </StyledInvoicesContainer>
   );
 };
-
+InvoicesContainer.propTypes = {
+  invoices: PropTypes.array.isRequired
+};
 export default InvoicesContainer;

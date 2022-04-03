@@ -24,7 +24,52 @@ export const invoicesSlice = createSlice({
       invoicePrice: 14002.33,
       status: 'Pending'
     }
-  ]
+  ],
+  reducers: {
+    addInvoiceDraft: (state, action) => {
+      const newInvoice = {
+        id: Math.random().toString(36).substring(7).toLocaleUpperCase(),
+        contractor: action.payload.contractor,
+        status: 'Draft',
+        dateDue: '20 Aug 2021',
+        invoicePrice: +action.payload.invoicePrice
+      };
+      state.push(newInvoice);
+    },
+    addInvoicePending: (state, action) => {
+      const newInvoice = {
+        id: Math.random().toString(36).substring(7).toLocaleUpperCase(),
+        contractor: action.payload.contractor,
+        status: 'Pending',
+        dateDue: '20 Aug 2021',
+        invoicePrice: +action.payload.invoicePrice
+      };
+      state.push(newInvoice);
+    },
+    deleteInvoice: (state, action) => {
+      return state.filter((invoice) => invoice.id !== action.payload.id);
+    },
+    changeStatusOfInvoice: (state, action) => {
+      const index = state.findIndex((invoice) => invoice.id === action.payload.id);
+      state[index].status = 'Paid';
+    },
+    saveInvoice: (state, action) => {
+      const newInvoice = {
+        ...action.payload,
+        status: 'Pending',
+        invoicePrice: +action.payload.invoicePrice
+      };
+      state.push(newInvoice);
+    }
+  }
 });
+
+export const {
+  addInvoiceDraft,
+  addInvoicePending,
+  deleteInvoice,
+  changeStatusOfInvoice,
+  saveInvoice
+} = invoicesSlice.actions;
 
 export default invoicesSlice.reducer;

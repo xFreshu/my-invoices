@@ -6,27 +6,23 @@ import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import ActionButton from '../../atoms/ActionButton/ActionButton';
 import { ButtonContainer } from '../../../pages/ChosenInvoice/ChosenInvoice.styles';
+import { useDispatch } from 'react-redux';
+import { deleteInvoice, saveInvoice } from '../../../app/redux/features/invoices/invoicesSlice';
 
-const DraftInvoice = ({ getInvoice, invoices, setInvoices, navigate }) => {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors }
-  } = useForm();
+const DraftInvoice = ({
+  getInvoice,
+  invoices,
+  setInvoices,
+  navigate,
+  handleDeleteInvoice,
+  invoiceId
+}) => {
+  const dispatch = useDispatch();
+  const { register, handleSubmit } = useForm();
   //Edit invoice
   const onSubmit = (data) => {
-    const day = new Date();
-    const newDate = data.dateDue;
-
-    console.log(newDate);
-    const savedInvoice = { ...data, status: 'Pending', invoicePrice: +data.invoicePrice };
-    console.log(savedInvoice);
-    const savedID = data.id;
-    console.log(invoices.filter((item) => item.id === savedID));
-    console.log(savedID);
-    const getNewArray = invoices.filter((item) => item.id !== savedID);
-    setInvoices([...getNewArray, savedInvoice]);
+    console.log(data.id === invoiceId);
+    dispatch(saveInvoice({ ...data }));
     navigate(`/`);
   };
 
@@ -63,6 +59,8 @@ DraftInvoice.propTypes = {
   getInvoice: PropTypes.object.isRequired,
   invoices: PropTypes.array.isRequired,
   setInvoices: PropTypes.func.isRequired,
-  navigate: PropTypes.func.isRequired
+  navigate: PropTypes.func.isRequired,
+  handleDeleteInvoice: PropTypes.func,
+  invoiceId: PropTypes.string
 };
 export default DraftInvoice;

@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import FilterSection from '../../components/molecules/FilterSection/FilterSection';
 import InvoicesContainer from '../../components/organisms/InvoicesContainer/InvoicesContainer';
+import { useSelector } from 'react-redux';
 
-const Home = ({ invoices }) => {
+const Home = () => {
   const [searchedInvoices, setSearchedInvoices] = useState('');
+  const invoices = useSelector((state) => state);
   const filteredInvoice = invoices.filter((item) =>
     item.status.toLowerCase().includes(searchedInvoices.toLocaleLowerCase())
   );
@@ -18,10 +20,6 @@ const Home = ({ invoices }) => {
       <InvoicesContainer invoices={filteredInvoice} />
     </>
   );
-};
-
-Home.propTypes = {
-  invoices: PropTypes.array.isRequired
 };
 
 export default Home;
