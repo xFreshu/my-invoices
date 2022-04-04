@@ -15,36 +15,20 @@ const AddInvoice = () => {
   const {
     register,
     handleSubmit,
-    watch,
+    reset,
     formState: { errors }
   } = useForm();
 
   const dispatch = useDispatch();
   const onDraft = (data) => {
     dispatch(addInvoiceDraft({ contractor: data.contractor, invoicePrice: data.invoicePrice }));
+    reset();
   };
 
   const onSubmit = (data) => {
     dispatch(addInvoicePending({ contractor: data.contractor, invoicePrice: data.invoicePrice }));
+    reset();
   };
-
-  const date = new Date();
-  const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
-  ];
-  const t1 = months[date.getMonth()];
-  const currentDay = `${date.getDay()} ${t1} ${date.getFullYear()}`;
 
   return (
     <FormContainer>

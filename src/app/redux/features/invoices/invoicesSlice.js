@@ -1,5 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const date = new Date();
+const months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+];
+const t1 = months[date.getMonth()];
+const currentDay = `${date.getDate()} ${t1} ${date.getFullYear()}`;
+
 export const invoicesSlice = createSlice({
   name: 'Invoices',
   initialState: [
@@ -31,7 +49,7 @@ export const invoicesSlice = createSlice({
         id: Math.random().toString(36).substring(7).toLocaleUpperCase(),
         contractor: action.payload.contractor,
         status: 'Draft',
-        dateDue: '20 Aug 2021',
+        dateDue: currentDay,
         invoicePrice: +action.payload.invoicePrice
       };
       state.push(newInvoice);
@@ -41,7 +59,7 @@ export const invoicesSlice = createSlice({
         id: Math.random().toString(36).substring(7).toLocaleUpperCase(),
         contractor: action.payload.contractor,
         status: 'Pending',
-        dateDue: '20 Aug 2021',
+        dateDue: currentDay,
         invoicePrice: +action.payload.invoicePrice
       };
       state.push(newInvoice);
@@ -54,12 +72,8 @@ export const invoicesSlice = createSlice({
       state[index].status = 'Paid';
     },
     saveInvoice: (state, action) => {
-      const newInvoice = {
-        ...action.payload,
-        status: 'Pending',
-        invoicePrice: +action.payload.invoicePrice
-      };
-      state.push(newInvoice);
+      const index = state.findIndex((invoice) => invoice.id === action.payload.id);
+      state[index].status = 'Pending';
     }
   }
 });

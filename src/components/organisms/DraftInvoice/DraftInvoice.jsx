@@ -21,9 +21,8 @@ const DraftInvoice = ({
   const { register, handleSubmit } = useForm();
   //Edit invoice
   const onSubmit = (data) => {
-    console.log(data.id === invoiceId);
-    dispatch(saveInvoice({ ...data }));
-    navigate(`/`);
+    const id = invoiceId;
+    dispatch(saveInvoice({ id }));
   };
 
   return (
