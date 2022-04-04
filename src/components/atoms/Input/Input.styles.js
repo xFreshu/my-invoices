@@ -7,4 +7,7 @@ export const StyledInput = styled.input`
   outline: none;
   color: ${({ theme }) => theme.fontColor};
   margin-bottom: 10px;
+  :disabled {
+    color: rgba(230, 232, 250, 0.3);
+  }
 `;

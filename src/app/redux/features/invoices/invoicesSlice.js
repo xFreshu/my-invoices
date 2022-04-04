@@ -1,55 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, current } from '@reduxjs/toolkit';
 
 const date = new Date();
-const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-];
-const t1 = months[date.getMonth()];
-const currentDay = `${date.getDate()} ${t1} ${date.getFullYear()}`;
-
+const fullName = `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
 export const invoicesSlice = createSlice({
   name: 'Invoices',
-  initialState: [
-    {
-      id: 'RT3080',
-      dateDue: '19 Aug 2021',
-      contractor: 'Jensen Huang',
-      invoicePrice: 1800.9,
-      status: 'Paid'
-    },
-    {
-      id: 'WW5010',
-      dateDue: '20 Aug 2021',
-      contractor: 'Alex Grim',
-      invoicePrice: 556.0,
-      status: 'Draft'
-    },
-    {
-      id: 'SS2120',
-      dateDue: '21 Aug 2021',
-      contractor: 'Alysa Werner',
-      invoicePrice: 14002.33,
-      status: 'Pending'
-    }
-  ],
+  initialState: [],
   reducers: {
     addInvoiceDraft: (state, action) => {
       const newInvoice = {
         id: Math.random().toString(36).substring(7).toLocaleUpperCase(),
         contractor: action.payload.contractor,
         status: 'Draft',
-        dateDue: currentDay,
+        dateDue: fullName,
         invoicePrice: +action.payload.invoicePrice
       };
       state.push(newInvoice);
@@ -59,7 +21,7 @@ export const invoicesSlice = createSlice({
         id: Math.random().toString(36).substring(7).toLocaleUpperCase(),
         contractor: action.payload.contractor,
         status: 'Pending',
-        dateDue: currentDay,
+        dateDue: fullName,
         invoicePrice: +action.payload.invoicePrice
       };
       state.push(newInvoice);
@@ -73,6 +35,9 @@ export const invoicesSlice = createSlice({
     },
     saveInvoice: (state, action) => {
       const index = state.findIndex((invoice) => invoice.id === action.payload.id);
+      state[index].contractor = action.payload.contractor;
+      state[index].invoicePrice = +action.payload.invoicePrice;
+      state[index].dateDue = action.payload.dateDue;
       state[index].status = 'Pending';
     }
   }

@@ -12,7 +12,7 @@ const ActionButton = ({ name, type, onClick }) => {
 
 ActionButton.propTypes = {
   name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string,
   onClick: PropTypes.func
 };
 

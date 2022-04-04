@@ -11,7 +11,7 @@ const PendingOrPaidInvoice = ({ getInvoice, changeStatus, deleteInvoice }) => {
     <>
       <StatusInvoice invoiceStatus={getInvoice.status} />
       <StyledLabel>Invoice ID:</StyledLabel>
-      <StyledInput defaultValue={getInvoice.id} />
+      <StyledInput defaultValue={getInvoice.id} disabled />
       <StyledLabel>Contractor name:</StyledLabel>
       <StyledInput defaultValue={getInvoice.contractor} disabled={getInvoice.status !== 'Draft'} />
       <StyledLabel>Date due:</StyledLabel>

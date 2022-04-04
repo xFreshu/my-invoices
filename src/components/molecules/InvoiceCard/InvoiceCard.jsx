@@ -28,7 +28,7 @@ const InvoiceCard = ({ id, invoicePrice, contractor, dateDue, status, onClick })
 
 InvoiceCard.propTypes = {
   id: PropTypes.string,
-  dateDue: PropTypes.string,
+  dateDue: PropTypes.any,
   contractor: PropTypes.string,
   invoicePrice: PropTypes.number,
   status: PropTypes.string,

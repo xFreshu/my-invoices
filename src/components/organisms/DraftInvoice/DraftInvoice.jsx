@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import StatusInvoice from '../../atoms/StatusInvoice/StatusInvoice';
 import { StyledLabel } from '../../atoms/Input/Label.styles';
 import { StyledInput } from '../../atoms/Input/Input.styles';
@@ -8,48 +8,89 @@ import ActionButton from '../../atoms/ActionButton/ActionButton';
 import { ButtonContainer } from '../../../pages/ChosenInvoice/ChosenInvoice.styles';
 import { useDispatch } from 'react-redux';
 import { deleteInvoice, saveInvoice } from '../../../app/redux/features/invoices/invoicesSlice';
-
-const DraftInvoice = ({
-  getInvoice,
-  invoices,
-  setInvoices,
-  navigate,
-  handleDeleteInvoice,
-  invoiceId
-}) => {
+import styled from 'styled-components';
+import { AiFillEdit } from 'react-icons/ai';
+const DraftInvoice = ({ getInvoice, invoiceId }) => {
+  const [isEdit, setIsEdit] = useState(false);
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   //Edit invoice
   const onSubmit = (data) => {
     const id = invoiceId;
-    dispatch(saveInvoice({ id }));
+    setIsEdit(true);
+    dispatch(
+      saveInvoice({
+        id,
+        contractor: data.contractor,
+        invoicePrice: data.invoicePrice,
+        dateDue: data.dateDue
+      })
+    );
   };
-
+  const CardHeader = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    div {
+      color: #fff;
+      font-size: 1.4rem;
+      :hover {
+        cursor: pointer;
+      }
+    }
+  `;
+  const handleIsEdit = () => {
+    setIsEdit(!isEdit);
+  };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <StatusInvoice invoiceStatus={getInvoice.status} />
+      <CardHeader>
+        <StatusInvoice invoiceStatus={getInvoice.status} />
+        <div>
+          <AiFillEdit onClick={handleIsEdit} />
+        </div>
+      </CardHeader>
       <StyledLabel>Invoice ID:</StyledLabel>
-      <StyledInput defaultValue={getInvoice.id} {...register('id')} />
+      <StyledInput defaultValue={getInvoice.id} {...register('id')} disabled={!isEdit} />
       <StyledLabel>Contractor name:</StyledLabel>
-      <StyledInput
-        defaultValue={getInvoice.contractor}
-        {...register('contractor')}
-        disabled={getInvoice.status !== 'Draft'}
-      />
+      {isEdit ? (
+        <StyledInput defaultValue={getInvoice.contractor} {...register('contractor')} />
+      ) : (
+        <StyledInput defaultValue={getInvoice.contractor} {...register('contractor')} disabled />
+      )}
       <StyledLabel>Date due:</StyledLabel>
-      <StyledInput
-        defaultValue={getInvoice.dateDue}
-        {...register('dateDue')}
-        disabled={getInvoice.status !== 'Draft'}
-      />
+      {isEdit ? (
+        <StyledInput defaultValue={getInvoice.dateDue} {...register('dateDue')} type="date" />
+      ) : (
+        <StyledInput
+          defaultValue={getInvoice.dateDue}
+          {...register('dateDue')}
+          type="date"
+          disabled
+        />
+      )}
+
       <StyledLabel>Invoice Price:</StyledLabel>
-      <StyledInput
-        defaultValue={getInvoice.invoicePrice}
-        {...register('invoicePrice')}
-        disabled={getInvoice.status !== 'Draft'}
-      />
+      {isEdit ? (
+        <StyledInput
+          type="number"
+          defaultValue={getInvoice.invoicePrice}
+          {...register('invoicePrice')}
+        />
+      ) : (
+        <StyledInput
+          type="number"
+          defaultValue={getInvoice.invoicePrice}
+          {...register('invoicePrice')}
+          disabled
+        />
+      )}
       <ButtonContainer>
-        <ActionButton type="submit" name={`Save invoice`} />
+        {!isEdit ? (
+          <ActionButton type="submit" name={`Save invoice`} />
+        ) : (
+          <div onClick={handleIsEdit}>Save</div>
+        )}
       </ButtonContainer>
     </form>
   );
